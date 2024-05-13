@@ -1,13 +1,14 @@
-import { Node } from "./jinja";
-import { parse } from "./parser";
-import { print, embed, getVisitorKeys } from "./printer";
 import {
 	Parser,
+	ParserOptions,
 	Printer,
 	SupportLanguage,
 	SupportOptions,
-	ParserOptions,
 } from "prettier";
+import declarativeAttrsParsers from "./declarative-attrs/parser";
+import { Node } from "./jinja";
+import { parse } from "./parser";
+import { embed, getVisitorKeys, print } from "./printer";
 
 const PLUGIN_KEY = "jinja-template";
 
@@ -27,6 +28,8 @@ export const parsers = {
 		locStart: (node) => node.index,
 		locEnd: (node) => node.index + node.length,
 	},
+	html: declarativeAttrsParsers.html,
+	lwc: declarativeAttrsParsers.lwc,
 };
 
 export const printers = {
